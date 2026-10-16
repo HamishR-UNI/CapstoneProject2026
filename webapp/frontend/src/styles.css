@@ -1,0 +1,127 @@
+:root {
+  --bg: #ffffff;
+  --panel: #f7f9fb;
+  --text: #1d3d52;
+  --muted: #5b6b77;
+  --grid: rgba(0, 0, 0, 0.07);
+  --border: #cfd8df;
+  --plot-frame: #aab6bf;
+  --accent: #2f6f92;
+  --ok: #245c35;
+  --bad: #a83232;
+  --warn-bg: #fff4d6;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.35 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.app { display: flex; flex-direction: column; min-height: 100%; padding: 0 16px 16px; }
+
+/* ---- status ---- */
+.status h1 { font-size: 15px; font-weight: 600; margin: 10px 0 4px; }
+.status-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.segmented { display: inline-flex; align-items: center; gap: 0; font-size: 12px; margin-top: 6px; }
+.segmented-label { color: var(--muted); margin-right: 8px; }
+.segmented button { padding: 2px 10px; border-radius: 0; margin-left: -1px; font-size: 12px; }
+.segmented button:first-of-type { border-radius: 6px 0 0 6px; margin-left: 0; }
+.segmented button:last-of-type { border-radius: 0 6px 6px 0; }
+.segmented button.on { background: var(--accent); border-color: var(--accent); color: #fff; position: relative; }
+.status-lines { font-size: 12.5px; min-height: 2.6em; }
+.status-lines.ok { color: var(--ok); }
+.status-lines.bad { color: var(--bad); }
+.banner { margin: 4px 0; padding: 6px 10px; border-radius: 6px; font-size: 12.5px; }
+.banner.warn { background: var(--warn-bg); border: 1px solid #e6c970; }
+.banner button { margin-left: 8px; }
+
+/* ---- layout: trends left, schematic + controls right ---- */
+.layout { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr); gap: 16px; flex: 1; min-height: 0; }
+.trends { display: grid; grid-template-rows: repeat(7, minmax(135px, 1fr)); gap: 6px; height: calc(100vh - 100px); min-height: 840px; }
+.side { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+.panel {
+  display: flex; flex-direction: column; min-height: 0; min-width: 0;
+  background: #fff; border: 1px solid var(--border); border-radius: 8px;
+  padding: 5px 8px 4px; box-shadow: 0 1px 2px rgba(29, 61, 82, 0.05);
+}
+.panel-titles { display: flex; justify-content: space-between; font-size: 11px; color: var(--text); font-weight: 600; padding: 0 2px 2px; }
+.panel-plot { flex: 1; min-height: 0; min-width: 0; position: relative; overflow: hidden; }
+.panel-legend { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 10.5px; color: var(--muted); padding: 2px 2px 0; }
+.legend-item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+
+/* ---- schematic ---- */
+.schematic-wrap { border: 1px solid var(--border); border-radius: 8px; background: var(--panel); padding: 6px; }
+.schematic { width: 100%; height: auto; display: block; }
+.schematic-empty { padding: 60px 0; text-align: center; color: var(--muted); }
+
+/* ---- controls ---- */
+.controls { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.controls-left, .controls-right { display: flex; flex-direction: column; gap: 10px; }
+.sliders { display: flex; flex-direction: column; gap: 6px; }
+.slider-row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) 4.6em; gap: 8px; align-items: start; }
+.slider-row > label { padding-top: 2px; text-align: right; }
+.slider-row.inactive { opacity: 0.45; }
+.slider-track input[type='range'] { width: 100%; margin: 0; accent-color: var(--accent); }
+.range-labels { display: flex; justify-content: space-between; font-size: 9.5px; color: #8a96a0; margin-top: -2px; }
+.value-box { width: 100%; text-align: center; font: inherit; padding: 2px 4px; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text); }
+.value-box:disabled { background: #eef1f4; }
+
+.radio-group { border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px 8px; margin: 0; }
+.radio-group legend { font-weight: 600; font-size: 12px; padding: 0 4px; }
+.radio-group label { display: flex; align-items: center; gap: 6px; padding: 1px 0; cursor: pointer; }
+.radio-group .row { display: flex; gap: 14px; }
+.radio-group label.inline { margin-top: 4px; gap: 8px; font-size: 11.5px; color: var(--muted); }
+.radio-group label.inline .value-box { width: 5em; }
+.econ { display: flex; flex-direction: column; gap: 8px; }
+
+.toolbar { display: flex; gap: 8px; }
+button, a.button {
+  font: inherit; padding: 5px 14px; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--text);
+  cursor: pointer; text-decoration: none; display: inline-block;
+}
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); min-width: 5.5em; }
+button:disabled, a.button.disabled { opacity: 0.5; cursor: default; }
+button:hover:not(:disabled), a.button:hover { filter: brightness(0.96); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* ---- desktop: everything fits the window (no page scroll); the schematic takes the height left
+   over by the controls, and both columns share the window height ---- */
+@media (min-width: 1100px) and (min-height: 700px) {
+  html, body, #root { overflow: hidden; }
+  .app { height: 100vh; min-height: 0; padding: 0 14px 12px; }
+  .layout { grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr); min-height: 0; }
+  .trends { height: auto; min-height: 0; grid-template-rows: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .side { min-height: 0; gap: 8px; }
+  .schematic-wrap { flex: 1 1 0; min-height: 0; display: flex; padding: 4px; }
+  .schematic { flex: 1; width: 100%; height: 100%; min-width: 0; min-height: 0; }
+  .controls { flex: 0 0 auto; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; }
+  .controls-right { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: start; }
+  .controls-right .econ { gap: 6px; }
+  .sliders { gap: 3px; }
+  .slider-row { grid-template-columns: 11.5em minmax(0, 1fr) 4.4em; gap: 6px; }
+  .slider-row > label { white-space: nowrap; padding-top: 0; font-size: 12px; }
+  .range-labels { margin-top: -3px; }
+  .radio-group { padding: 2px 8px 5px; }
+  .radio-group label { padding: 0; }
+  .panel-legend { font-size: 10px; gap: 0 10px; }
+  .status h1 { margin: 6px 0 2px; }
+  .status-lines { min-height: 2.5em; }
+}
+
+/* ---- narrow screens: one column, trends below the controls ---- */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .side { order: -1; }
+  .trends { height: auto; min-height: 0; grid-template-rows: repeat(7, 170px); }
+  .controls { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .app { padding: 0 10px 12px; }
+  .slider-row { grid-template-columns: minmax(0, 1fr) 4.6em; }
+  .slider-row > label { grid-column: 1 / -1; text-align: left; padding-top: 0; }
+}

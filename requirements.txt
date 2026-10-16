@@ -1,0 +1,9 @@
+numpy
+scipy
+gekko
+CoolProp
+matplotlib
+fastapi
+uvicorn[standard]
+pytest
+httpx
